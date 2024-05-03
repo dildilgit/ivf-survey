@@ -8,7 +8,14 @@ import { Input, inputClasses } from "@mui/base/Input";
 export function Step1({ setStep }: { setStep: (step: number) => void }) {
   return (
     <div>
-      <form onSubmit={() => setStep(2)}>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          alert("Form Submitted");
+
+          setStep(2);
+        }}
+      >
         <FormControl className="question">
           <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
             What is the age you are reporting for?
@@ -62,11 +69,28 @@ export function Step1({ setStep }: { setStep: (step: number) => void }) {
             variant="standard"
             required
           />
-
-          <div className="nextButton">
-            <Button variant="contained">Next</Button>
-          </div>
         </FormControl>
+
+        <FormControl className="question">
+          <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
+            What is your Antral Follicular Count (AFC)? You can provide an
+            average since it is not always the same.
+          </FormLabel>
+          <TextField
+            id="standard-number"
+            label="Number"
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="standard"
+            required
+          />
+        </FormControl>
+
+        <div className="nextButton">
+          <Button variant="contained">Next</Button>
+        </div>
       </form>
     </div>
   );
