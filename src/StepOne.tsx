@@ -10,7 +10,7 @@ export function Step1({ setStep }: { setStep: (step: number) => void }) {
     <div>
       <form onSubmit={() => setStep(2)}>
         <FormControl className="question">
-          <FormLabel className="questionLabel">
+          <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
             What is the age you are reporting for?
           </FormLabel>
           <TextField
@@ -27,7 +27,7 @@ export function Step1({ setStep }: { setStep: (step: number) => void }) {
         </FormControl>
 
         <FormControl className="question">
-          <FormLabel className="questionLabel">
+          <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
             What is your AMH (Anti-mullerian hormone) in ng/mL
           </FormLabel>
           <TextField
@@ -40,14 +40,16 @@ export function Step1({ setStep }: { setStep: (step: number) => void }) {
             variant="standard"
             required
           />
-          <FormHelperText>
-            You can use this conversion tool to convert from other metrics:
-            https://unitslab.com/node/155
+          <FormHelperText sx={{ fontSize: "0.8em" }}>
+            You can{" "}
+            <a href="https://unitslab.com/node/155">
+              use this conversion tool to convert from other metrics.
+            </a>
           </FormHelperText>
         </FormControl>
 
         <FormControl className="question">
-          <FormLabel className="questionLabel">
+          <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
             What is your highest recorded FSH (miU/mL)
           </FormLabel>
           <TextField
