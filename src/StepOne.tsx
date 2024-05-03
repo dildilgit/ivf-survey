@@ -1,4 +1,4 @@
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, FormLabel, FormHelperText } from "@mui/material";
 import { styled } from "@mui/system";
 import { FormControl, useFormControlContext } from "@mui/base/FormControl";
 import { useEffect, useState } from "react";
@@ -9,8 +9,10 @@ export function Step1({ setStep }: { setStep: (step: number) => void }) {
   return (
     <div>
       <form onSubmit={() => setStep(2)}>
-        <FormControl>
-          <Label>What is the age you are reporting for?</Label>
+        <FormControl className="question">
+          <FormLabel className="questionLabel">
+            What is the age you are reporting for?
+          </FormLabel>
           <TextField
             id="standard-number"
             label="Number"
@@ -24,12 +26,10 @@ export function Step1({ setStep }: { setStep: (step: number) => void }) {
           <HelperText />
         </FormControl>
 
-        <FormControl>
-          <Label>What is your AMH (Anti-mullerian hormone) in ng/mL</Label>
-          <h4>
-            You can use this conversion tool to convert from other metrics:
-            https://unitslab.com/node/155{" "}
-          </h4>
+        <FormControl className="question">
+          <FormLabel className="questionLabel">
+            What is your AMH (Anti-mullerian hormone) in ng/mL
+          </FormLabel>
           <TextField
             id="standard-number"
             label="Number"
@@ -40,10 +40,16 @@ export function Step1({ setStep }: { setStep: (step: number) => void }) {
             variant="standard"
             required
           />
+          <FormHelperText>
+            You can use this conversion tool to convert from other metrics:
+            https://unitslab.com/node/155
+          </FormHelperText>
         </FormControl>
 
-        <FormControl>
-          <Label>What is your highest recorded FSH (miU/mL)</Label>
+        <FormControl className="question">
+          <FormLabel className="questionLabel">
+            What is your highest recorded FSH (miU/mL)
+          </FormLabel>
           <TextField
             id="standard-number"
             label="Number"

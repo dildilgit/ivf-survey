@@ -9,3 +9,13 @@
 .nextButton {
   margin-top: 1em;
 }
+
+.question {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 55px;
+}
+
+.questionLabel {
+  margin-bottom: 10px;
+}
