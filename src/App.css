@@ -13,7 +13,6 @@
 
 .divider {
   width: 100%;
-  margin-bottom: 30px;
 }
 
 .contentSection{
@@ -31,9 +30,20 @@
 .question {
   display: flex;
   flex-direction: column;
-  margin-bottom: 55px;
+  margin-bottom: 2em;
 }
 
 .questionLabel {
-  margin-bottom: 10px;
+  margin-bottom: 0.5em;
+}
+
+.arrowForwardIcon {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.2em;
+}
+@media (min-width: 905px) {
+  .arrowForwardIcon {
+    display: none;
+  }
 }

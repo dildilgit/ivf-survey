@@ -9,9 +9,11 @@ import {
   Paper,
   Checkbox,
   Box,
+  Typography,
 } from "@mui/material";
 import { styled } from "styled-components";
 import { IVFAttemptData, SurveyData } from "./StepSection";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const headers: { label: string; key: keyof IVFAttemptData }[] = [
   { label: "Follicles at Retrieval", key: "folliclesAtRetrieval" },
@@ -98,7 +100,13 @@ export function Step2({
 
   return (
     <div>
-      {data.attempts !== null && (
+      <div className="arrowForwardIcon">
+        <Typography variant="subtitle1" gutterBottom color="primary">
+          Scroll right to see all fields
+        </Typography>
+        <ArrowForwardIcon />
+      </div>
+      {data.attempts !== null && data.attempts > 0 && (
         <Box sx={{ width: "100%", display: "table", tableLayout: "fixed" }}>
           <TableContainer component={Paper}>
             <Table>
