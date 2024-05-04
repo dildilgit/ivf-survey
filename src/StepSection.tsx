@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Final } from "./Final";
 import { Intro } from "./Intro";
 import { Step1 } from "./StepOne";
+import { Step3 } from "./StepThree";
 import { Step2 } from "./StepTwo";
 
 export type SurveyData = {
@@ -48,6 +49,8 @@ export function StepSection({
       return <Step1 setStep={setStep} data={data} setData={setData} />;
     case 2:
       return <Step2 setStep={setStep} data={data} setData={setData} />;
+    case 3:
+      return <Step3 setStep={setStep} data={data} setData={setData} />;
     default:
       return <Final setStep={setStep} />;
   }

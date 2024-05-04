@@ -10,6 +10,7 @@ import {
   Checkbox,
   Box,
   Typography,
+  Button,
 } from "@mui/material";
 import { styled } from "styled-components";
 import { IVFAttemptData, SurveyData } from "./StepSection";
@@ -128,6 +129,17 @@ export function Step2({
           </TableContainer>
         </Box>
       )}
+
+      <div className="nextButton">
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => setStep(3)}
+          type="submit"
+        >
+          Next (3/3)
+        </Button>
+      </div>
     </div>
   );
 }
