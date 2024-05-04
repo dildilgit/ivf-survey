@@ -1,18 +1,32 @@
 import { TextField, Button, FormLabel, FormHelperText } from "@mui/material";
-import { styled } from "@mui/system";
-import { FormControl, useFormControlContext } from "@mui/base/FormControl";
-import { useEffect, useState } from "react";
-import clsx from "clsx";
-import { Input, inputClasses } from "@mui/base/Input";
+import { FormControl } from "@mui/base/FormControl";
+import { useState } from "react";
+
+type Data = {
+  age: number | null;
+  amh: number | null;
+  fsh: number | null;
+  afc: number | null;
+  attempts: number | null;
+};
 
 export function Step1({ setStep }: { setStep: (step: number) => void }) {
+  const [data, setData] = useState<Data>({
+    age: null,
+    amh: null,
+    fsh: null,
+    afc: null,
+    attempts: null,
+  });
+
+  console.log(data);
+
   return (
     <div>
       <form
         onSubmit={(event) => {
           event.preventDefault();
           alert("Form Submitted");
-
           setStep(2);
         }}
       >
@@ -29,10 +43,12 @@ export function Step1({ setStep }: { setStep: (step: number) => void }) {
             }}
             variant="standard"
             required
+            value={data.age}
+            onChange={(event) =>
+              setData({ ...data, age: parseInt(event.target.value) })
+            }
           />
-          <HelperText />
         </FormControl>
-
         <FormControl className="question">
           <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
             What is your AMH (Anti-mullerian hormone) in ng/mL
@@ -46,6 +62,10 @@ export function Step1({ setStep }: { setStep: (step: number) => void }) {
             }}
             variant="standard"
             required
+            value={data.amh}
+            onChange={(event) =>
+              setData({ ...data, amh: parseInt(event.target.value) })
+            }
           />
           <FormHelperText sx={{ fontSize: "0.8em" }}>
             You can{" "}
@@ -54,7 +74,6 @@ export function Step1({ setStep }: { setStep: (step: number) => void }) {
             </a>
           </FormHelperText>
         </FormControl>
-
         <FormControl className="question">
           <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
             What is your highest recorded FSH (miU/mL)
@@ -68,9 +87,12 @@ export function Step1({ setStep }: { setStep: (step: number) => void }) {
             }}
             variant="standard"
             required
+            value={data.fsh}
+            onChange={(event) =>
+              setData({ ...data, fsh: parseInt(event.target.value) })
+            }
           />
         </FormControl>
-
         <FormControl className="question">
           <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
             What is your Antral Follicular Count (AFC)? You can provide an
@@ -85,6 +107,31 @@ export function Step1({ setStep }: { setStep: (step: number) => void }) {
             }}
             variant="standard"
             required
+            value={data.afc}
+            onChange={(event) =>
+              setData({ ...data, afc: parseInt(event.target.value) })
+            }
+          />
+        </FormControl>
+        <FormControl className="question">
+          <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
+            How many IVF attempts have you had so far that you haven't reported
+            to the sheet? If you've previously reported an attempt, please only
+            submit new ones.
+          </FormLabel>
+          <TextField
+            id="standard-number"
+            label="Number"
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="standard"
+            required
+            value={data.attempts}
+            onChange={(event) =>
+              setData({ ...data, attempts: parseInt(event.target.value) })
+            }
           />
         </FormControl>
 
@@ -95,125 +142,3 @@ export function Step1({ setStep }: { setStep: (step: number) => void }) {
     </div>
   );
 }
-const Label = styled(
-  ({
-    children,
-    className,
-  }: {
-    children?: React.ReactNode;
-    className?: string;
-  }) => {
-    const formControlContext = useFormControlContext();
-    const [dirty, setDirty] = useState(false);
-
-    useEffect(() => {
-      if (formControlContext?.filled) {
-        setDirty(true);
-      }
-    }, [formControlContext]);
-
-    if (formControlContext === undefined) {
-      return <p>{children}</p>;
-    }
-
-    const { error, required, filled } = formControlContext;
-    const showRequiredError = dirty && required && !filled;
-
-    return (
-      <p
-        className={clsx(className, error || showRequiredError ? "invalid" : "")}
-      >
-        {children}
-        {required ? " *" : ""}
-      </p>
-    );
-  }
-)`
-  font-family: "IBM Plex Sans", sans-serif;
-  font-size: 0.875rem;
-  margin-bottom: 4px;
-
-  &.invalid {
-    color: red;
-  }
-`;
-
-const StyledInput = styled(Input)(
-  ({ theme }) => `
-
-    .${inputClasses.input} {
-      width: 320px;
-      font-family: 'IBM Plex Sans', sans-serif;
-      font-size: 0.875rem;
-      font-weight: 400;
-      line-height: 1.5;
-      padding: 8px 12px;
-      border-radius: 8px;
-      color: ${theme.palette.mode === "dark" ? grey[300] : grey[900]};
-      background: ${theme.palette.mode === "dark" ? grey[900] : "#fff"};
-      border: 1px solid ${
-        theme.palette.mode === "dark" ? grey[700] : grey[200]
-      };
-      box-shadow: 0px 2px 2px ${
-        theme.palette.mode === "dark" ? grey[900] : grey[50]
-      };
-
-      &:hover {
-        border-color: ${blue[400]};
-      }
-
-      &:focus {
-        outline: 0;
-        border-color: ${blue[400]};
-        box-shadow: 0 0 0 3px ${
-          theme.palette.mode === "dark" ? blue[600] : blue[200]
-        };
-      }
-    }
-  `
-);
-
-const HelperText = styled((props: {}) => {
-  const formControlContext = useFormControlContext();
-  const [dirty, setDirty] = useState(false);
-
-  useEffect(() => {
-    if (formControlContext?.filled) {
-      setDirty(true);
-    }
-  }, [formControlContext]);
-
-  if (formControlContext === undefined) {
-    return null;
-  }
-
-  const { required, filled } = formControlContext;
-  const showRequiredError = dirty && required && !filled;
-
-  return showRequiredError ? <p {...props}>This field is required.</p> : null;
-})`
-  font-family: "IBM Plex Sans", sans-serif;
-  font-size: 0.875rem;
-`;
-
-const blue = {
-  100: "#DAECFF",
-  200: "#b6daff",
-  400: "#3399FF",
-  500: "#007FFF",
-  600: "#0072E5",
-  900: "#003A75",
-};
-
-const grey = {
-  50: "#F3F6F9",
-  100: "#E5EAF2",
-  200: "#DAE2ED",
-  300: "#C7D0DD",
-  400: "#B0B8C4",
-  500: "#9DA8B7",
-  600: "#6B7A90",
-  700: "#434D5B",
-  800: "#303740",
-  900: "#1C2025",
-};

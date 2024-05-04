@@ -7,7 +7,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>IVF Survey</h1>
+      <h1>IVF Numbers Game</h1>
       <StepSection step={step} setStep={setStep} />
     </div>
   );
