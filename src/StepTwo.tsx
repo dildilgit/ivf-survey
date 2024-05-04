@@ -8,6 +8,7 @@ import {
   TableBody,
   Paper,
   Checkbox,
+  Box,
 } from "@mui/material";
 import { styled } from "styled-components";
 import { IVFAttemptData, SurveyData } from "./StepSection";
@@ -98,24 +99,26 @@ export function Step2({
   return (
     <div>
       {data.attempts !== null && (
-        <TableContainer className={"attemptsTable"} component={Paper}>
-          <Table>
-            <TableHead>
-              <StyledTableRow>
-                <TableCell>Attempt #</TableCell>
-                <TableCell>Cancelled?</TableCell>
-                {headers.map((header) => (
-                  <TableCell key={header.key}>{header.label}</TableCell> // Correct use of label for display
-                ))}
-              </StyledTableRow>
-            </TableHead>
-            <TableBody>
-              {Array.from({ length: data.attempts || 0 }, (_, index) =>
-                renderInputRow(index)
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <Box sx={{ width: "100%", display: "table", tableLayout: "fixed" }}>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow sx={{ backgroundColor: "#ffede0" }}>
+                  <TableCell>Attempt #</TableCell>
+                  <TableCell>Cancelled?</TableCell>
+                  {headers.map((header) => (
+                    <TableCell key={header.key}>{header.label}</TableCell> // Correct use of label for display
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {Array.from({ length: data.attempts || 0 }, (_, index) =>
+                  renderInputRow(index)
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       )}
     </div>
   );
