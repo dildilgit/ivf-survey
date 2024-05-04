@@ -9,6 +9,7 @@ import {
   Paper,
   Checkbox,
 } from "@mui/material";
+import { styled } from "styled-components";
 import { IVFAttemptData, SurveyData } from "./StepSection";
 
 const headers: { label: string; key: keyof IVFAttemptData }[] = [
@@ -62,7 +63,7 @@ export function Step2({
   };
 
   const renderInputRow = (index: number) => (
-    <TableRow key={index}>
+    <StyledTableRow key={index}>
       <TableCell>{index + 1}</TableCell>
       <TableCell>
         <Checkbox
@@ -91,22 +92,22 @@ export function Step2({
           </TableCell>
         );
       })}
-    </TableRow>
+    </StyledTableRow>
   );
 
   return (
     <div>
       {data.attempts !== null && (
-        <TableContainer component={Paper}>
+        <TableContainer className={"attemptsTable"} component={Paper}>
           <Table>
             <TableHead>
-              <TableRow>
+              <StyledTableRow>
                 <TableCell>Attempt #</TableCell>
                 <TableCell>Cancelled?</TableCell>
                 {headers.map((header) => (
                   <TableCell key={header.key}>{header.label}</TableCell> // Correct use of label for display
                 ))}
-              </TableRow>
+              </StyledTableRow>
             </TableHead>
             <TableBody>
               {Array.from({ length: data.attempts || 0 }, (_, index) =>
@@ -119,3 +120,12 @@ export function Step2({
     </div>
   );
 }
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: "white",
+  },
+  "&:nth-of-type(even)": {
+    backgroundColor: "#ffede0",
+  },
+}));
