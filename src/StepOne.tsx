@@ -12,7 +12,7 @@ export function Step1({
   setData: React.Dispatch<React.SetStateAction<SurveyData>>;
 }) {
   return (
-    <div>
+    <form onSubmit={() => setStep(2)}>
       <FormControl className="question">
         <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
           What is the age you are reporting for?
@@ -121,23 +121,13 @@ export function Step1({
       </FormControl>
 
       <div className="nextButton">
-        <Button
-          variant="outlined"
-          color="secondary"
-          onClick={() => setStep(0)}
-          type="submit"
-        >
+        <Button variant="outlined" color="secondary" onClick={() => setStep(0)}>
           Back to Intro
         </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setStep(2)}
-          type="submit"
-        >
+        <Button variant="contained" color="primary" type="submit">
           Next (2/3)
         </Button>
       </div>
-    </div>
+    </form>
   );
 }

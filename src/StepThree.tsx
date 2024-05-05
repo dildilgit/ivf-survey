@@ -27,7 +27,7 @@ export function Step3({
   //   };
 
   return (
-    <div>
+    <form onSubmit={() => setStep(4)}>
       <Typography
         variant="subtitle1"
         gutterBottom
@@ -225,23 +225,13 @@ export function Step3({
       </Box>
 
       <div className="nextButton">
-        <Button
-          variant="outlined"
-          color="secondary"
-          onClick={() => setStep(2)}
-          type="submit"
-        >
+        <Button variant="outlined" color="secondary" onClick={() => setStep(2)}>
           Back(2/3)
         </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setStep(4)}
-          type="submit"
-        >
+        <Button variant="contained" color="primary" type="submit">
           Results
         </Button>
       </div>
-    </div>
+    </form>
   );
 }

@@ -100,7 +100,7 @@ export function Step2({
   );
 
   return (
-    <div>
+    <form onSubmit={() => setStep(3)}>
       <div className="arrowForwardIcon">
         <Typography variant="subtitle1" gutterBottom color="primary">
           Scroll right to see all fields
@@ -131,24 +131,14 @@ export function Step2({
       )}
 
       <div className="nextButton">
-        <Button
-          variant="outlined"
-          color="secondary"
-          onClick={() => setStep(1)}
-          type="submit"
-        >
+        <Button variant="outlined" color="secondary" onClick={() => setStep(1)}>
           Back(1/3)
         </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setStep(3)}
-          type="submit"
-        >
+        <Button variant="contained" color="primary" type="submit">
           Next (3/3)
         </Button>
       </div>
-    </div>
+    </form>
   );
 }
 
