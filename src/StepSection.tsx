@@ -25,6 +25,17 @@ export type IVFAttemptData = {
   day5PlusEmbryosTransferred: number | null;
 };
 
+export function getEmptySurveyData(): SurveyData {
+  return {
+    age: null,
+    amh: "",
+    fsh: "",
+    afc: null,
+    attempts: null,
+    ivfData: [],
+  };
+}
+
 export function StepSection({
   step,
   setStep,
@@ -32,14 +43,7 @@ export function StepSection({
   step: number;
   setStep: React.Dispatch<React.SetStateAction<number>>;
 }) {
-  const [data, setData] = useState<SurveyData>({
-    age: null,
-    amh: "",
-    fsh: "",
-    afc: null,
-    attempts: null,
-    ivfData: [],
-  });
+  const [data, setData] = useState<SurveyData>(getEmptySurveyData());
   console.log(data);
 
   switch (step) {
@@ -52,6 +56,6 @@ export function StepSection({
     case 3:
       return <Step3 setStep={setStep} data={data} setData={setData} />;
     default:
-      return <Final setStep={setStep} />;
+      return <Final setStep={setStep} setData={setData} />;
   }
 }

@@ -1,6 +1,13 @@
 import Button from "@mui/material/Button";
+import { getEmptySurveyData, SurveyData } from "./StepSection";
 
-export function Final({ setStep }: { setStep: (step: number) => void }) {
+export function Final({
+  setStep,
+  setData,
+}: {
+  setStep: (step: number) => void;
+  setData: React.Dispatch<React.SetStateAction<SurveyData>>;
+}) {
   return (
     <div>
       <p>
@@ -8,7 +15,13 @@ export function Final({ setStep }: { setStep: (step: number) => void }) {
         <a href="https://www.example.com">example.com</a>.
       </p>
 
-      <Button onClick={() => setStep(0)} variant="contained">
+      <Button
+        onClick={() => {
+          setData(getEmptySurveyData());
+          setStep(0);
+        }}
+        variant="contained"
+      >
         Take Survey Again
       </Button>
     </div>
