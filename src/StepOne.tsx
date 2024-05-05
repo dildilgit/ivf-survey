@@ -122,6 +122,14 @@ export function Step1({
 
       <div className="nextButton">
         <Button
+          variant="outlined"
+          color="secondary"
+          onClick={() => setStep(0)}
+          type="submit"
+        >
+          Back to Intro
+        </Button>
+        <Button
           variant="contained"
           color="primary"
           onClick={() => setStep(2)}
