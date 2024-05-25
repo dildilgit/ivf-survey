@@ -7,6 +7,13 @@ import Typography from "@mui/material/Typography";
 function App() {
   const [step, setStep] = useState<number>(0);
 
+  const subtitles = [
+    "Introduction",
+    "Basic information",
+    "Attempts",
+    "Optional",
+  ];
+
   return (
     <ThemeProvider theme={theme}>
       <div className="AppContainer">
@@ -15,6 +22,9 @@ function App() {
             IVF Numbers Game
           </Typography>
           <div className="contentSection">
+            <Typography variant="subtitle1" gutterBottom color="primary">
+              {subtitles[step]}
+            </Typography>
             <Divider className="divider" sx={{ borderBottomWidth: 3 }} />
             <div className="stepSection">
               <StepSection step={step} setStep={setStep} />
