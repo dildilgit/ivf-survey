@@ -37,6 +37,10 @@
   margin-bottom: 2em;
 }
 
+.question:last-of-type {
+  margin-bottom: 0;
+}
+
 .questionLabel {
   margin-bottom: 0.5em;
 }
@@ -50,4 +54,16 @@
   .arrowForwardIcon {
     display: none;
   }
+}
+
+.attemptSection {
+  padding: 10px;
+  margin-bottom: 2em;
+  width: 800px;
+  border: 1px solid #EDC5AB;
+}
+
+.attemptQuestions {
+  display: flex;
+  flex-direction: column;
 }

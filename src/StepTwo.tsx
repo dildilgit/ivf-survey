@@ -1,20 +1,17 @@
 import {
   TextField,
-  TableContainer,
-  Table,
-  TableHead,
   TableRow,
-  TableCell,
-  TableBody,
   Paper,
   Checkbox,
-  Box,
   Typography,
   Button,
+  FormLabel,
+  Divider,
 } from "@mui/material";
+import { FormControl } from "@mui/base/FormControl";
+
 import { styled } from "styled-components";
 import { IVFAttemptData, SurveyData } from "./StepSection";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const headers: { label: string; key: keyof IVFAttemptData }[] = [
   { label: "Follicles at Retrieval", key: "folliclesAtRetrieval" },
@@ -25,6 +22,17 @@ const headers: { label: string; key: keyof IVFAttemptData }[] = [
   { label: "PGT Normal Embryos", key: "pgtNormalEmbryos" },
   { label: "Day 5+ Embryos Transferred", key: "day5PlusEmbryosTransferred" },
 ];
+
+export const generateNewIVFData = () => ({
+  isCancelled: null,
+  folliclesAtRetrieval: null,
+  eggsRetrieved: null,
+  fertilizedOnDay1: null,
+  day3EmbryosTransferred: null,
+  blasts: null,
+  pgtNormalEmbryos: null,
+  day5PlusEmbryosTransferred: null,
+});
 
 export function Step2({
   setStep,
@@ -66,69 +74,137 @@ export function Step2({
     });
   };
 
-  const renderInputRow = (index: number) => (
-    <StyledTableRow key={index}>
-      <TableCell>{index + 1}</TableCell>
-      <TableCell>
-        <Checkbox
-          onChange={(e) =>
-            handleInputChange(index, "isCancelled", e.target.checked)
-          }
-        />
-      </TableCell>
+  const renderAttempt = (data: IVFAttemptData, index: number) => (
+    <Paper className="attemptSection">
+      <Typography variant="overline"> Attempt # {index + 1} </Typography>
+      <div className="attemptQuestions">
+        <FormControl className="question">
+          <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
+            # Follicles at Retrieval
+          </FormLabel>
+          <TextField
+            id="standard-number"
+            label="Number"
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="standard"
+            required
+            value={1}
+            onChange={(event) => {}}
+          />
+        </FormControl>
+        <FormControl className="question">
+          <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
+            # Eggs Retrieved
+          </FormLabel>
+          <TextField
+            id="standard-number"
+            label="Number"
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="standard"
+            required
+            value={1}
+            onChange={(event) => {}}
+          />
+        </FormControl>
 
-      {headers.map((header) => {
-        const key = header.key;
-        const attemptData = data.ivfData[index];
-        const value =
-          attemptData && attemptData[key] !== null
-            ? attemptData[key]?.toString()
-            : "";
-        return (
-          <TableCell key={key}>
-            <TextField
-              variant="outlined"
-              size="small"
-              type="number"
-              value={value}
-              onChange={(e) => handleInputChange(index, key, e.target.value)}
-            />
-          </TableCell>
-        );
-      })}
-    </StyledTableRow>
+        <FormControl className="question">
+          <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
+            # Fertilized on Day 1
+          </FormLabel>
+          <TextField
+            id="standard-number"
+            label="Number"
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="standard"
+            required
+            value={1}
+            onChange={(event) => {}}
+          />
+        </FormControl>
+        <FormControl className="question">
+          <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
+            # Day 3 Embryos Transferred
+          </FormLabel>
+          <TextField
+            id="standard-number"
+            label="Number"
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="standard"
+            required
+            value={1}
+            onChange={(event) => {}}
+          />
+        </FormControl>
+        <FormControl className="question">
+          <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
+            # Blastocysts (Day 5+)
+          </FormLabel>
+          <TextField
+            id="standard-number"
+            label="Number"
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="standard"
+            required
+            value={1}
+            onChange={(event) => {}}
+          />
+        </FormControl>
+        <FormControl className="question">
+          <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
+            # PGT Normal Embryos
+          </FormLabel>
+          <TextField
+            id="standard-number"
+            label="Number"
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="standard"
+            required
+            value={1}
+            onChange={(event) => {}}
+          />
+        </FormControl>
+        <FormControl className="question">
+          <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
+            # Day 5+ Embryos Transferred
+          </FormLabel>
+          <TextField
+            id="standard-number"
+            label="Number"
+            type="number"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="standard"
+            required
+            value={1}
+            onChange={(event) => {}}
+          />
+        </FormControl>
+      </div>{" "}
+    </Paper>
   );
 
   return (
     <form onSubmit={() => setStep(3)}>
-      <div className="arrowForwardIcon">
-        <Typography variant="subtitle1" gutterBottom color="primary">
-          Scroll right to see all fields
-        </Typography>
-        <ArrowForwardIcon />
-      </div>
-      {data.attempts !== null && data.attempts > 0 && (
-        <Box sx={{ width: "100%", display: "table", tableLayout: "fixed" }}>
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow sx={{ backgroundColor: "#ffede0" }}>
-                  <TableCell>Attempt #</TableCell>
-                  <TableCell>Cancelled?</TableCell>
-                  {headers.map((header) => (
-                    <TableCell key={header.key}>{header.label}</TableCell> // Correct use of label for display
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {Array.from({ length: data.attempts || 0 }, (_, index) =>
-                  renderInputRow(index)
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
-      )}
+      {data.ivfData.map((attempt, index) => renderAttempt(attempt, index))}
 
       <div className="nextButton">
         <Button variant="outlined" color="secondary" onClick={() => setStep(1)}>

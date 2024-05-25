@@ -1,6 +1,7 @@
 import { TextField, Button, FormLabel, FormHelperText } from "@mui/material";
 import { FormControl } from "@mui/base/FormControl";
 import { SurveyData } from "./StepSection";
+import { generateNewIVFData } from "./StepTwo";
 
 export function Step1({
   setStep,
@@ -114,9 +115,13 @@ export function Step1({
           variant="standard"
           required
           value={data.attempts}
-          onChange={(event) =>
-            setData({ ...data, attempts: parseInt(event.target.value) })
-          }
+          onChange={(event) => {
+            const attemptsNumber = parseInt(event.target.value);
+            const ivfData = new Array(attemptsNumber).fill(
+              generateNewIVFData()
+            );
+            setData({ ...data, attempts: attemptsNumber, ivfData });
+          }}
         />
       </FormControl>
 
