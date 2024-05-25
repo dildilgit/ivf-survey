@@ -1,9 +1,15 @@
+.AppContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .App {
-  padding: 1em 2em;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  max-width: 800px;
 }
 @media (min-width: 1024px) {
   .App {

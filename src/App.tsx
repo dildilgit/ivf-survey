@@ -9,14 +9,16 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
-        <Typography variant="h4" gutterBottom color="primary">
-          IVF Numbers Game
-        </Typography>
-        <div className="contentSection">
-          <Divider className="divider" sx={{ borderBottomWidth: 3 }} />
-          <div className="stepSection">
-            <StepSection step={step} setStep={setStep} />
+      <div className="AppContainer">
+        <div className="App">
+          <Typography variant="h4" gutterBottom color="primary">
+            IVF Numbers Game
+          </Typography>
+          <div className="contentSection">
+            <Divider className="divider" sx={{ borderBottomWidth: 3 }} />
+            <div className="stepSection">
+              <StepSection step={step} setStep={setStep} />
+            </div>
           </div>
         </div>
       </div>
