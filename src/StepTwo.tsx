@@ -115,6 +115,18 @@ export function Step2({
               InputLabelProps={{
                 shrink: true,
               }}
+              error={
+                !!data.fertilizedOnDay1 &&
+                !!data.eggsRetrieved &&
+                data.fertilizedOnDay1 > data.eggsRetrieved
+              }
+              helperText={
+                !!data.fertilizedOnDay1 &&
+                !!data.eggsRetrieved &&
+                data.fertilizedOnDay1 > data.eggsRetrieved
+                  ? "Number fertilized must be less than or equal to the number of eggs"
+                  : ""
+              }
               variant="standard"
               value={data.fertilizedOnDay1}
               onChange={(event) =>
@@ -135,6 +147,18 @@ export function Step2({
               }}
               variant="standard"
               value={data.day3EmbryosTransferred}
+              error={
+                !!data.day3EmbryosTransferred &&
+                !!data.eggsRetrieved &&
+                data.day3EmbryosTransferred > data.eggsRetrieved
+              }
+              helperText={
+                !!data.day3EmbryosTransferred &&
+                !!data.eggsRetrieved &&
+                data.day3EmbryosTransferred > data.eggsRetrieved
+                  ? "Number transferred must be less than or equal to the number of eggs"
+                  : ""
+              }
               onChange={(event) =>
                 handleInputChange(
                   index,
@@ -157,6 +181,18 @@ export function Step2({
               }}
               variant="standard"
               value={data.blasts}
+              error={
+                !!data.blasts &&
+                !!data.eggsRetrieved &&
+                data.blasts > data.eggsRetrieved
+              }
+              helperText={
+                !!data.blasts &&
+                !!data.eggsRetrieved &&
+                data.blasts > data.eggsRetrieved
+                  ? "Number of blastocysts can not be more than the number of eggs and there shouldn't be more PGT normal embryos than there are blasts"
+                  : ""
+              }
               onChange={(event) =>
                 handleInputChange(index, "blasts", event.target.value)
               }
@@ -175,6 +211,22 @@ export function Step2({
               }}
               variant="standard"
               value={data.pgtNormalEmbryos}
+              error={
+                !!data.pgtNormalEmbryos &&
+                !!data.eggsRetrieved &&
+                !!data.blasts &&
+                (data.pgtNormalEmbryos > data.eggsRetrieved ||
+                  data.pgtNormalEmbryos > data.blasts)
+              }
+              helperText={
+                !!data.pgtNormalEmbryos &&
+                !!data.eggsRetrieved &&
+                !!data.blasts &&
+                (data.pgtNormalEmbryos > data.eggsRetrieved ||
+                  data.pgtNormalEmbryos > data.blasts)
+                  ? "Number of blastocysts must be less than or equal to the number of eggs"
+                  : ""
+              }
               onChange={(event) =>
                 handleInputChange(index, "pgtNormalEmbryos", event.target.value)
               }
@@ -193,6 +245,22 @@ export function Step2({
               }}
               variant="standard"
               value={data.day5PlusEmbryosTransferred}
+              error={
+                !!data.eggsRetrieved &&
+                !!data.blasts &&
+                !!data.day5PlusEmbryosTransferred &&
+                (data.day5PlusEmbryosTransferred > data.eggsRetrieved ||
+                  data.day5PlusEmbryosTransferred > data.blasts)
+              }
+              helperText={
+                !!data.eggsRetrieved &&
+                !!data.blasts &&
+                !!data.day5PlusEmbryosTransferred &&
+                (data.day5PlusEmbryosTransferred > data.eggsRetrieved ||
+                  data.day5PlusEmbryosTransferred > data.blasts)
+                  ? "Number of day 5 embryos cannot be more than the number of eggs or blasts"
+                  : ""
+              }
               onChange={(event) =>
                 handleInputChange(
                   index,
@@ -212,7 +280,7 @@ export function Step2({
                 name="cancelled"
               />
             }
-            label="Was cancelled"
+            label="Was cancelled?"
           />
           <FormControlLabel
             control={
@@ -224,7 +292,7 @@ export function Step2({
                 name="cancelled"
               />
             }
-            label="Was cancelled"
+            label="Donor eggs?"
           />
           <FormControlLabel
             control={
@@ -236,7 +304,7 @@ export function Step2({
                 name="cancelled"
               />
             }
-            label="Was cancelled"
+            label="ICSI fertilization?"
           />
         </div>
       </Paper>
