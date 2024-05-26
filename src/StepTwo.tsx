@@ -33,6 +33,41 @@ export function Step2({
   data: SurveyData;
   setData: React.Dispatch<React.SetStateAction<SurveyData>>;
 }) {
+  let isFormValid = true;
+  console.log("isFormValid = ", isFormValid);
+
+  Object.values(data.ivfData).map((data) => {
+    const isFertilizationValid =
+      !!data.fertilizedOnDay1 && !!data.eggsRetrieved
+        ? data.fertilizedOnDay1 > data.eggsRetrieved
+        : true;
+    const isday3TransferValid =
+      !!data.day3EmbryosTransferred && !!data.eggsRetrieved
+        ? data.day3EmbryosTransferred > data.eggsRetrieved
+        : true;
+    const isPgtNormalValid =
+      !!data.pgtNormalEmbryos && !!data.eggsRetrieved && !!data.blasts
+        ? data.pgtNormalEmbryos > data.eggsRetrieved ||
+          data.pgtNormalEmbryos > data.blasts
+        : true;
+    const isDay5TransferValid =
+      !!data.eggsRetrieved && !!data.blasts && !!data.day5PlusEmbryosTransferred
+        ? data.day5PlusEmbryosTransferred > data.eggsRetrieved ||
+          data.day5PlusEmbryosTransferred > data.blasts
+        : true;
+
+    if (
+      !isFertilizationValid ||
+      !isday3TransferValid ||
+      !isPgtNormalValid ||
+      !isDay5TransferValid
+    ) {
+      isFormValid = false;
+    } else {
+      isFormValid = true;
+    }
+  });
+
   const handleInputChange = (
     index: number,
     field: keyof IVFAttemptData,
@@ -58,6 +93,28 @@ export function Step2({
 
   const renderAttempt = (data: IVFAttemptData) => {
     const index = data.attemptNumber;
+
+    const isFertilizationValid =
+      !!data.fertilizedOnDay1 &&
+      !!data.eggsRetrieved &&
+      data.fertilizedOnDay1 > data.eggsRetrieved;
+    const isday3TransferValid =
+      !!data.day3EmbryosTransferred &&
+      !!data.eggsRetrieved &&
+      data.day3EmbryosTransferred > data.eggsRetrieved;
+    const isPgtNormalValid =
+      !!data.pgtNormalEmbryos &&
+      !!data.eggsRetrieved &&
+      !!data.blasts &&
+      (data.pgtNormalEmbryos > data.eggsRetrieved ||
+        data.pgtNormalEmbryos > data.blasts);
+    const isDay5TransferValid =
+      !!data.eggsRetrieved &&
+      !!data.blasts &&
+      !!data.day5PlusEmbryosTransferred &&
+      (data.day5PlusEmbryosTransferred > data.eggsRetrieved ||
+        data.day5PlusEmbryosTransferred > data.blasts);
+
     return (
       <Paper className="attemptSection" key={index}>
         <Typography variant="overline"> Attempt # {index + 1} </Typography>
@@ -115,15 +172,9 @@ export function Step2({
               InputLabelProps={{
                 shrink: true,
               }}
-              error={
-                !!data.fertilizedOnDay1 &&
-                !!data.eggsRetrieved &&
-                data.fertilizedOnDay1 > data.eggsRetrieved
-              }
+              error={isFertilizationValid}
               helperText={
-                !!data.fertilizedOnDay1 &&
-                !!data.eggsRetrieved &&
-                data.fertilizedOnDay1 > data.eggsRetrieved
+                isFertilizationValid
                   ? "Number fertilized must be less than or equal to the number of eggs"
                   : ""
               }
@@ -147,15 +198,9 @@ export function Step2({
               }}
               variant="standard"
               value={data.day3EmbryosTransferred}
-              error={
-                !!data.day3EmbryosTransferred &&
-                !!data.eggsRetrieved &&
-                data.day3EmbryosTransferred > data.eggsRetrieved
-              }
+              error={isday3TransferValid}
               helperText={
-                !!data.day3EmbryosTransferred &&
-                !!data.eggsRetrieved &&
-                data.day3EmbryosTransferred > data.eggsRetrieved
+                isday3TransferValid
                   ? "Number transferred must be less than or equal to the number of eggs"
                   : ""
               }
@@ -211,19 +256,9 @@ export function Step2({
               }}
               variant="standard"
               value={data.pgtNormalEmbryos}
-              error={
-                !!data.pgtNormalEmbryos &&
-                !!data.eggsRetrieved &&
-                !!data.blasts &&
-                (data.pgtNormalEmbryos > data.eggsRetrieved ||
-                  data.pgtNormalEmbryos > data.blasts)
-              }
+              error={isPgtNormalValid}
               helperText={
-                !!data.pgtNormalEmbryos &&
-                !!data.eggsRetrieved &&
-                !!data.blasts &&
-                (data.pgtNormalEmbryos > data.eggsRetrieved ||
-                  data.pgtNormalEmbryos > data.blasts)
+                isPgtNormalValid
                   ? "Number of blastocysts must be less than or equal to the number of eggs"
                   : ""
               }
@@ -245,19 +280,9 @@ export function Step2({
               }}
               variant="standard"
               value={data.day5PlusEmbryosTransferred}
-              error={
-                !!data.eggsRetrieved &&
-                !!data.blasts &&
-                !!data.day5PlusEmbryosTransferred &&
-                (data.day5PlusEmbryosTransferred > data.eggsRetrieved ||
-                  data.day5PlusEmbryosTransferred > data.blasts)
-              }
+              error={isDay5TransferValid}
               helperText={
-                !!data.eggsRetrieved &&
-                !!data.blasts &&
-                !!data.day5PlusEmbryosTransferred &&
-                (data.day5PlusEmbryosTransferred > data.eggsRetrieved ||
-                  data.day5PlusEmbryosTransferred > data.blasts)
+                isDay5TransferValid
                   ? "Number of day 5 embryos cannot be more than the number of eggs or blasts"
                   : ""
               }
@@ -312,16 +337,27 @@ export function Step2({
   };
 
   return (
-    <form onSubmit={() => setStep(3)}>
+    <form className="form" onSubmit={() => setStep(3)}>
       {Object.values(data.ivfData).map((attempt) => renderAttempt(attempt))}
 
-      <div className="nextButton">
-        <Button variant="outlined" color="secondary" onClick={() => setStep(1)}>
-          Back(1/3)
-        </Button>
-        <Button variant="contained" color="primary" type="submit">
-          Next (3/3)
-        </Button>
+      <div className="floatingButtons">
+        <div className="nextButton">
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() => setStep(1)}
+          >
+            Back(1/3)
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            disabled={!isFormValid}
+          >
+            Next (3/3)
+          </Button>
+        </div>
       </div>
     </form>
   );

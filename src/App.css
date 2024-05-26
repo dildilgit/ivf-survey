@@ -1,3 +1,8 @@
+html, body{
+  height: 100%;
+  margin: 0;
+}
+
 .AppContainer {
   display: flex;
   justify-content: center;
@@ -24,6 +29,19 @@
 
 .stepSection {
   margin-top: 1.4em;
+}
+
+.form{
+  position: relative;
+}
+
+.floatingButtons {
+  background-color: #fff3eb;
+  text-align: center;
+  padding: 10px;
+  position: sticky;
+  bottom: 0;
+  padding-bottom: 1em;
 }
 
 .nextButton {
