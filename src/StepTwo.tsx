@@ -15,7 +15,7 @@ import { IVFAttemptData, SurveyData } from "./StepSection";
 
 export const generateNewIVFData = (index: number): IVFAttemptData => ({
   attemptNumber: index,
-  isCancelled: null,
+  isCancelled: undefined,
   folliclesAtRetrieval: null,
   eggsRetrieved: null,
   fertilizedOnDay1: null,
@@ -34,12 +34,13 @@ export function Step2({
   data: SurveyData;
   setData: React.Dispatch<React.SetStateAction<SurveyData>>;
 }) {
+  console.log("xxx data = ", data);
+
   const handleInputChange = (
     index: number,
     field: keyof IVFAttemptData,
     value: string | boolean
   ): void => {
-    console.log("xxx called with index = ", index);
     const dataValue =
       typeof value === "string"
         ? value === ""
@@ -47,11 +48,8 @@ export function Step2({
           : Number(value)
         : Boolean(value);
 
-    console.log("xxx data = ", data, "index = ", index);
-
     setData((prevData) => {
       const newAttemptData = { ...prevData.ivfData[index], [field]: dataValue };
-      console.log("xxx new ivf data AFTER = ", newAttemptData);
       return {
         ...prevData,
         ivfData: {
@@ -217,7 +215,13 @@ export function Step2({
           </FormControl>
           <FormControlLabel
             control={
-              <Checkbox checked={true} onChange={() => {}} name="cancelled" />
+              <Checkbox
+                checked={data.isCancelled}
+                onChange={(event) =>
+                  handleInputChange(index, "isCancelled", event.target.checked)
+                }
+                name="cancelled"
+              />
             }
             label="Was cancelled"
           />

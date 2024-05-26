@@ -16,7 +16,6 @@ export type SurveyData = {
 
 export type IVFAttemptData = {
   attemptNumber: number;
-  isCancelled: boolean | null;
   folliclesAtRetrieval: number | null;
   eggsRetrieved: number | null;
   fertilizedOnDay1: number | null;
@@ -24,6 +23,7 @@ export type IVFAttemptData = {
   blasts: number | null;
   pgtNormalEmbryos: number | null;
   day5PlusEmbryosTransferred: number | null;
+  isCancelled: boolean | undefined;
 };
 
 export function getEmptySurveyData(): SurveyData {
