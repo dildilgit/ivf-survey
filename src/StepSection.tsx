@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Final } from "./Final";
 import { Intro } from "./Intro";
+import { generateNickname } from "./nickname/source";
 import { Step1 } from "./StepOne";
 import { Step3 } from "./StepThree";
 import { Step2 } from "./StepTwo";
@@ -55,11 +56,13 @@ export function StepSection({
   setStep: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const [data, setData] = useState<SurveyData>(getEmptySurveyData());
+  const [nickname, setNickname] = useState<string>(generateNickname());
+
   console.log(data);
 
   switch (step) {
     case 0:
-      return <Intro setStep={setStep} />;
+      return <Intro setStep={setStep} nickname={nickname} />;
     case 1:
       return <Step1 setStep={setStep} data={data} setData={setData} />;
     case 2:

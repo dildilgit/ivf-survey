@@ -1,7 +1,7 @@
 import { createTheme, Divider, ThemeProvider } from "@mui/material";
 import { useState } from "react";
 import "./App.css";
-import { IVFAttemptData, StepSection } from "./StepSection";
+import { StepSection } from "./StepSection";
 import Typography from "@mui/material/Typography";
 
 function App() {
