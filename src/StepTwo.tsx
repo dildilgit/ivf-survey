@@ -1,6 +1,5 @@
 import {
   TextField,
-  TableRow,
   Paper,
   Checkbox,
   Typography,
@@ -9,8 +8,6 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import { FormControl } from "@mui/base/FormControl";
-
-import { styled } from "styled-components";
 import { IVFAttemptData, SurveyData } from "./StepSection";
 
 export const generateNewIVFData = (index: number): IVFAttemptData => ({
@@ -34,8 +31,6 @@ export function Step2({
   data: SurveyData;
   setData: React.Dispatch<React.SetStateAction<SurveyData>>;
 }) {
-  console.log("xxx data = ", data);
-
   const handleInputChange = (
     index: number,
     field: keyof IVFAttemptData,
@@ -49,7 +44,6 @@ export function Step2({
         : Boolean(value);
 
     setData((prevData) => {
-      const newAttemptData = { ...prevData.ivfData[index], [field]: dataValue };
       return {
         ...prevData,
         ivfData: {
@@ -62,7 +56,6 @@ export function Step2({
 
   const renderAttempt = (data: IVFAttemptData) => {
     const index = data.attemptNumber;
-    console.log("xxx render index ", index);
     return (
       <Paper className="attemptSection" key={index}>
         <Typography variant="overline"> Attempt # {index + 1} </Typography>
@@ -102,7 +95,6 @@ export function Step2({
                 shrink: true,
               }}
               variant="standard"
-              required
               value={data.eggsRetrieved}
               onChange={(event) =>
                 handleInputChange(index, "eggsRetrieved", event.target.value)
@@ -122,7 +114,6 @@ export function Step2({
                 shrink: true,
               }}
               variant="standard"
-              required
               value={data.fertilizedOnDay1}
               onChange={(event) =>
                 handleInputChange(index, "fertilizedOnDay1", event.target.value)
@@ -141,7 +132,6 @@ export function Step2({
                 shrink: true,
               }}
               variant="standard"
-              required
               value={data.day3EmbryosTransferred}
               onChange={(event) =>
                 handleInputChange(
@@ -164,7 +154,6 @@ export function Step2({
                 shrink: true,
               }}
               variant="standard"
-              required
               value={data.blasts}
               onChange={(event) =>
                 handleInputChange(index, "blasts", event.target.value)
@@ -183,7 +172,6 @@ export function Step2({
                 shrink: true,
               }}
               variant="standard"
-              required
               value={data.pgtNormalEmbryos}
               onChange={(event) =>
                 handleInputChange(index, "pgtNormalEmbryos", event.target.value)
@@ -202,7 +190,6 @@ export function Step2({
                 shrink: true,
               }}
               variant="standard"
-              required
               value={data.day5PlusEmbryosTransferred}
               onChange={(event) =>
                 handleInputChange(
@@ -245,12 +232,3 @@ export function Step2({
     </form>
   );
 }
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: "white",
-  },
-  "&:nth-of-type(even)": {
-    backgroundColor: "#ffede0",
-  },
-}));
