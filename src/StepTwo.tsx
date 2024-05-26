@@ -13,16 +13,6 @@ import { FormControl } from "@mui/base/FormControl";
 import { styled } from "styled-components";
 import { IVFAttemptData, SurveyData } from "./StepSection";
 
-const headers: { label: string; key: keyof IVFAttemptData }[] = [
-  { label: "Follicles at Retrieval", key: "folliclesAtRetrieval" },
-  { label: "Eggs Retrieved", key: "eggsRetrieved" },
-  { label: "Fertilized on Day 1", key: "fertilizedOnDay1" },
-  { label: "Day 3 Embryos Transferred", key: "day3EmbryosTransferred" },
-  { label: "Blastocysts (Day 5+)", key: "blasts" },
-  { label: "PGT Normal Embryos", key: "pgtNormalEmbryos" },
-  { label: "Day 5+ Embryos Transferred", key: "day5PlusEmbryosTransferred" },
-];
-
 export const generateNewIVFData = (index: number): IVFAttemptData => ({
   attemptNumber: index,
   isCancelled: null,
@@ -115,8 +105,10 @@ export function Step2({
               }}
               variant="standard"
               required
-              value={1}
-              onChange={(event) => {}}
+              value={data.eggsRetrieved}
+              onChange={(event) =>
+                handleInputChange(index, "eggsRetrieved", event.target.value)
+              }
             />
           </FormControl>
 
@@ -133,8 +125,10 @@ export function Step2({
               }}
               variant="standard"
               required
-              value={1}
-              onChange={(event) => {}}
+              value={data.fertilizedOnDay1}
+              onChange={(event) =>
+                handleInputChange(index, "fertilizedOnDay1", event.target.value)
+              }
             />
           </FormControl>
           <FormControl className="question">
@@ -150,8 +144,14 @@ export function Step2({
               }}
               variant="standard"
               required
-              value={1}
-              onChange={(event) => {}}
+              value={data.day3EmbryosTransferred}
+              onChange={(event) =>
+                handleInputChange(
+                  index,
+                  "day3EmbryosTransferred",
+                  event.target.value
+                )
+              }
             />
           </FormControl>
           <FormControl className="question">
@@ -167,8 +167,10 @@ export function Step2({
               }}
               variant="standard"
               required
-              value={1}
-              onChange={(event) => {}}
+              value={data.blasts}
+              onChange={(event) =>
+                handleInputChange(index, "blasts", event.target.value)
+              }
             />
           </FormControl>
           <FormControl className="question">
@@ -184,8 +186,10 @@ export function Step2({
               }}
               variant="standard"
               required
-              value={1}
-              onChange={(event) => {}}
+              value={data.pgtNormalEmbryos}
+              onChange={(event) =>
+                handleInputChange(index, "pgtNormalEmbryos", event.target.value)
+              }
             />
           </FormControl>
           <FormControl className="question">
@@ -201,8 +205,14 @@ export function Step2({
               }}
               variant="standard"
               required
-              value={1}
-              onChange={(event) => {}}
+              value={data.day5PlusEmbryosTransferred}
+              onChange={(event) =>
+                handleInputChange(
+                  index,
+                  "day5PlusEmbryosTransferred",
+                  event.target.value
+                )
+              }
             />
           </FormControl>
           <FormControlLabel

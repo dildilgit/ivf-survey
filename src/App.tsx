@@ -58,13 +58,3 @@ const theme = createTheme({
 });
 
 export default App;
-
-const headers: { label: string; key: keyof IVFAttemptData }[] = [
-  { label: "Follicles at Retrieval", key: "folliclesAtRetrieval" },
-  { label: "Eggs Retrieved", key: "eggsRetrieved" },
-  { label: "Fertilized on Day 1", key: "fertilizedOnDay1" },
-  { label: "Day 3 Embryos Transferred", key: "day3EmbryosTransferred" },
-  { label: "Blastocysts (Day 5+)", key: "blasts" },
-  { label: "PGT Normal Embryos", key: "pgtNormalEmbryos" },
-  { label: "Day 5+ Embryos Transferred", key: "day5PlusEmbryosTransferred" },
-];
