@@ -7,11 +7,15 @@ import { Step2 } from "./StepTwo";
 
 export type SurveyData = {
   age: number | null;
-  amh: string;
-  fsh: string;
+  amh: number | null;
+  fsh: number | null;
   afc: number | null;
   attempts: number | null;
   ivfData: Record<IVFAttemptData["attemptNumber"], IVFAttemptData>;
+  diagnosis: string;
+  supplements: string;
+  procedures: string;
+  medications: string;
 };
 
 export type IVFAttemptData = {
@@ -24,16 +28,22 @@ export type IVFAttemptData = {
   pgtNormalEmbryos: number | null;
   day5PlusEmbryosTransferred: number | null;
   isCancelled: boolean | undefined;
+  isDonor: boolean | undefined;
+  isICSI: boolean | undefined;
 };
 
 export function getEmptySurveyData(): SurveyData {
   return {
     age: null,
-    amh: "",
-    fsh: "",
+    amh: null,
+    fsh: null,
     afc: null,
     attempts: null,
     ivfData: [],
+    diagnosis: "",
+    supplements: "",
+    procedures: "",
+    medications: "",
   };
 }
 

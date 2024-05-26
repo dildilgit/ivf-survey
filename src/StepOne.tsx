@@ -47,7 +47,9 @@ export function Step1({
           variant="standard"
           required
           value={data.amh}
-          onChange={(event) => setData({ ...data, amh: event.target.value })}
+          onChange={(event) =>
+            setData({ ...data, amh: parseInt(event.target.value) })
+          }
           inputProps={{
             step: "0.01", // Allows decimal inputs to two decimal places
           }}
@@ -73,7 +75,9 @@ export function Step1({
           variant="standard"
           required
           value={data.fsh}
-          onChange={(event) => setData({ ...data, fsh: event.target.value })}
+          onChange={(event) =>
+            setData({ ...data, fsh: parseInt(event.target.value) })
+          }
           inputProps={{
             step: "0.01", // Allows decimal inputs to two decimal places
           }}
@@ -101,9 +105,9 @@ export function Step1({
       </FormControl>
       <FormControl className="question">
         <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
-          How many IVF attempts have you had so far that you haven't reported to
-          the sheet? <br /> If you've previously reported an attempt, please
-          only submit new ones.
+          How many IVF attempts (a cancelled attempt counts) have you had so far
+          that you haven't reported to the sheet? <br /> If you've previously
+          reported an attempt, please only submit new ones.
         </FormLabel>
         <TextField
           id="standard-number"

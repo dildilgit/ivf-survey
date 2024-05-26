@@ -13,6 +13,8 @@ import { IVFAttemptData, SurveyData } from "./StepSection";
 export const generateNewIVFData = (index: number): IVFAttemptData => ({
   attemptNumber: index,
   isCancelled: undefined,
+  isDonor: undefined,
+  isICSI: undefined,
   folliclesAtRetrieval: null,
   eggsRetrieved: null,
   fertilizedOnDay1: null,
@@ -206,6 +208,30 @@ export function Step2({
                 checked={data.isCancelled}
                 onChange={(event) =>
                   handleInputChange(index, "isCancelled", event.target.checked)
+                }
+                name="cancelled"
+              />
+            }
+            label="Was cancelled"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={data.isDonor}
+                onChange={(event) =>
+                  handleInputChange(index, "isDonor", event.target.checked)
+                }
+                name="cancelled"
+              />
+            }
+            label="Was cancelled"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={data.isICSI}
+                onChange={(event) =>
+                  handleInputChange(index, "isICSI", event.target.checked)
                 }
                 name="cancelled"
               />

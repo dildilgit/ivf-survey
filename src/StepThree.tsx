@@ -79,6 +79,10 @@ export function Step3({
             label="Tubal issues"
           />
           <FormControlLabel
+            control={<Checkbox onChange={() => {}} name="tubal" />}
+            label="Unexplained (no reason was found for either partner"
+          />
+          <FormControlLabel
             control={<Checkbox onChange={() => {}} name="otherDiagnoses" />}
             label="Other"
           />
