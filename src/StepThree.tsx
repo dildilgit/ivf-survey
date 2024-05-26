@@ -1,7 +1,6 @@
 import {
   Button,
   FormLabel,
-  Box,
   FormGroup,
   FormControlLabel,
   Checkbox,
@@ -19,12 +18,45 @@ export function Step3({
   data: SurveyData;
   setData: React.Dispatch<React.SetStateAction<SurveyData>>;
 }) {
-  //   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //     setData({
-  //       ...state,
-  //       [event.target.name]: event.target.checked,
-  //     });
-  //   };
+  const handleChange = (
+    field: keyof SurveyData,
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const checkedFieldName = event.target.name;
+    const isChecked = event.target.checked;
+
+    let updatedField = "";
+
+    if (typeof data[field] === "string") {
+      const currentValues = data[field] as string;
+
+      if (isChecked) {
+        // Add the checked field name with a comma and a space
+        updatedField = currentValues
+          ? `${currentValues}, ${checkedFieldName}`
+          : checkedFieldName;
+      } else {
+        // Remove the unchecked field name with comma and space handling
+        const regex = new RegExp(`(,\\s*)?${checkedFieldName}(,\\s*)?`);
+        updatedField = currentValues.replace(regex, "").trim();
+
+        // Remove leading/trailing commas and spaces
+        if (updatedField.startsWith(",")) {
+          updatedField = updatedField.substring(1).trim();
+        }
+        if (updatedField.endsWith(",")) {
+          updatedField = updatedField
+            .substring(0, updatedField.length - 1)
+            .trim();
+        }
+      }
+    }
+
+    setData((prevData) => ({
+      ...prevData,
+      [field]: updatedField,
+    }));
+  };
 
   return (
     <form onSubmit={() => setStep(4)}>
@@ -43,47 +75,102 @@ export function Step3({
         </FormLabel>
         <FormGroup>
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="endometriosis" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("diagnosis", event)}
+                name="endometriosis"
+              />
+            }
             label="Endometriosis"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="adenomyosis" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("diagnosis", event)}
+                name="adenomyosis"
+              />
+            }
             label="Adenomyosis"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="abnormalSperm" />}
-            label="Low morphology/ motility/ count"
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("diagnosis", event)}
+                name="abnormalSperm"
+              />
+            }
+            label="Abnormal sperm: Low morphology/ motility/ count etc"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="varicocele" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("diagnosis", event)}
+                name="varicocele"
+              />
+            }
             label="Varicocele"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="otherMaleFactor" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("diagnosis", event)}
+                name="otherMaleFactor"
+              />
+            }
             label="Other male factor"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="pcos" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("diagnosis", event)}
+                name="pcos"
+              />
+            }
             label="PCOS (Polycystic Ovary Syndrome)"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="dor" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("diagnosis", event)}
+                name="dor"
+              />
+            }
             label="DOR (Diminished Ovarian Reserve)"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="poi" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("diagnosis", event)}
+                name="poi"
+              />
+            }
             label="POI / POF (Premature Ovarian Insufficiency / Failure)"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="tubal" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("diagnosis", event)}
+                name="tubal"
+              />
+            }
             label="Tubal issues"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="tubal" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("diagnosis", event)}
+                name="tubal"
+              />
+            }
             label="Unexplained (no reason was found for either partner"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="otherDiagnoses" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("diagnosis", event)}
+                name="otherDiagnoses"
+              />
+            }
             label="Other"
           />
         </FormGroup>
@@ -95,23 +182,48 @@ export function Step3({
         </FormLabel>
         <FormGroup>
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="dhea" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("supplements", event)}
+                name="dhea"
+              />
+            }
             label="DHEA"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="coq10" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("supplements", event)}
+                name="coq10"
+              />
+            }
             label="CoQ10"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="vitD" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("supplements", event)}
+                name="vitD"
+              />
+            }
             label="Vitamin D"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="prenatal" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("supplements", event)}
+                name="prenatal"
+              />
+            }
             label="Prenatal vitamins"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="otherSupplements" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("supplements", event)}
+                name="otherSupplements"
+              />
+            }
             label="Other"
           />
         </FormGroup>
@@ -123,31 +235,66 @@ export function Step3({
         </FormLabel>
         <FormGroup>
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="unblockTubes" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("procedures", event)}
+                name="unblockTubes"
+              />
+            }
             label="Unblocking tubes"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="laparoscopy" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("procedures", event)}
+                name="laparoscopy"
+              />
+            }
             label="Laparoscopy"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="varicoceleRemoval" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("procedures", event)}
+                name="varicoceleRemoval"
+              />
+            }
             label="Varicocele"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="ovarianPRP" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("procedures", event)}
+                name="ovarianPRP"
+              />
+            }
             label="Ovarian PRP"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="polupRemoval" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("procedures", event)}
+                name="polypRemoval"
+              />
+            }
             label="Uterine Polyp Removal"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="immunotherapy" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("procedures", event)}
+                name="immunotherapy"
+              />
+            }
             label="Immunotherapy"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="otherProcedures" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("procedures", event)}
+                name="otherProcedures"
+              />
+            }
             label="Other"
           />
         </FormGroup>
@@ -160,59 +307,129 @@ export function Step3({
         </FormLabel>
         <FormGroup>
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="estrogenPriming" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("medications", event)}
+                name="estrogenPriming"
+              />
+            }
             label="Estrogen Priming"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="elpis" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("medications", event)}
+                name="elpis"
+              />
+            }
             label="Elpis Priming (Androgen + Estrace + Provera)"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="menopur" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("medications", event)}
+                name="menopur"
+              />
+            }
             label="Menopur"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="rekovelle" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("medications", event)}
+                name="rekovelle"
+              />
+            }
             label="Rekovelle"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="gonalF" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("medications", event)}
+                name="gonalF"
+              />
+            }
             label="Gonal F"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="puregon" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("medications", event)}
+                name="puregon"
+              />
+            }
             label="Puregon"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="pergoveris" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("medications", event)}
+                name="pergoveris"
+              />
+            }
             label="Pergoveris"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="clomid" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("medications", event)}
+                name="clomid"
+              />
+            }
             label="Clomid"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="letrozole" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("medications", event)}
+                name="letrozole"
+              />
+            }
             label="Letrozole"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="saizen" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("medications", event)}
+                name="saizen"
+              />
+            }
             label="Saizen"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="omnitrope" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("medications", event)}
+                name="omnitrope"
+              />
+            }
             label="Omnitrope"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="lupron" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("medications", event)}
+                name="lupron"
+              />
+            }
             label="Lupron"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="orilissa" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("medications", event)}
+                name="orilissa"
+              />
+            }
             label="Orilissa"
           />
           <FormControlLabel
-            control={<Checkbox onChange={() => {}} name="otherMedications" />}
+            control={
+              <Checkbox
+                onChange={(event) => handleChange("medications", event)}
+                name="otherMedications"
+              />
+            }
             label="Other"
           />
         </FormGroup>
