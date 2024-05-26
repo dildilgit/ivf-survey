@@ -6,7 +6,7 @@ import {
   Typography,
   Button,
   FormLabel,
-  Divider,
+  FormControlLabel,
 } from "@mui/material";
 import { FormControl } from "@mui/base/FormControl";
 
@@ -198,7 +198,13 @@ export function Step2({
             onChange={(event) => {}}
           />
         </FormControl>
-      </div>{" "}
+        <FormControlLabel
+          control={
+            <Checkbox checked={true} onChange={() => {}} name="cancelled" />
+          }
+          label="Was cancelled"
+        />
+      </div>
     </Paper>
   );
 
