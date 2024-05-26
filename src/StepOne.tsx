@@ -1,6 +1,6 @@
 import { TextField, Button, FormLabel, FormHelperText } from "@mui/material";
 import { FormControl } from "@mui/base/FormControl";
-import { SurveyData } from "./StepSection";
+import { IVFAttemptData, SurveyData } from "./StepSection";
 import { generateNewIVFData } from "./StepTwo";
 
 export function Step1({
@@ -117,9 +117,15 @@ export function Step1({
           value={data.attempts}
           onChange={(event) => {
             const attemptsNumber = parseInt(event.target.value);
-            const ivfData = new Array(attemptsNumber).fill(
-              generateNewIVFData()
-            );
+            const ivfData: Record<
+              IVFAttemptData["attemptNumber"],
+              IVFAttemptData
+            > = {};
+
+            for (let i = 0; i < attemptsNumber; i++) {
+              ivfData[i] = generateNewIVFData(i);
+            }
+
             setData({ ...data, attempts: attemptsNumber, ivfData });
           }}
         />

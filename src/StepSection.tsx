@@ -11,10 +11,11 @@ export type SurveyData = {
   fsh: string;
   afc: number | null;
   attempts: number | null;
-  ivfData: IVFAttemptData[];
+  ivfData: Record<IVFAttemptData["attemptNumber"], IVFAttemptData>;
 };
 
 export type IVFAttemptData = {
+  attemptNumber: number;
   isCancelled: boolean | null;
   folliclesAtRetrieval: number | null;
   eggsRetrieved: number | null;

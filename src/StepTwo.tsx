@@ -23,7 +23,8 @@ const headers: { label: string; key: keyof IVFAttemptData }[] = [
   { label: "Day 5+ Embryos Transferred", key: "day5PlusEmbryosTransferred" },
 ];
 
-export const generateNewIVFData = () => ({
+export const generateNewIVFData = (index: number): IVFAttemptData => ({
+  attemptNumber: index,
   isCancelled: null,
   folliclesAtRetrieval: null,
   eggsRetrieved: null,
@@ -48,169 +49,176 @@ export function Step2({
     field: keyof IVFAttemptData,
     value: string | boolean
   ): void => {
+    console.log("xxx called with index = ", index);
     const dataValue =
       typeof value === "string"
         ? value === ""
           ? null
           : Number(value)
         : Boolean(value);
+
+    console.log("xxx data = ", data, "index = ", index);
+
     setData((prevData) => {
-      const newIVFData = [...prevData.ivfData];
-      if (!newIVFData[index]) {
-        newIVFData[index] = {
-          isCancelled: null,
-          folliclesAtRetrieval: null,
-          eggsRetrieved: null,
-          fertilizedOnDay1: null,
-          day3EmbryosTransferred: null,
-          blasts: null,
-          pgtNormalEmbryos: null,
-          day5PlusEmbryosTransferred: null,
-        };
-      }
-      // @ts-ignore
-      newIVFData[index][field] = dataValue;
-      return { ...prevData, ivfData: newIVFData };
+      const newAttemptData = { ...prevData.ivfData[index], [field]: dataValue };
+      console.log("xxx new ivf data AFTER = ", newAttemptData);
+      return {
+        ...prevData,
+        ivfData: {
+          ...prevData.ivfData,
+          [index]: { ...prevData.ivfData[index], [field]: dataValue },
+        },
+      };
     });
   };
 
-  const renderAttempt = (data: IVFAttemptData, index: number) => (
-    <Paper className="attemptSection">
-      <Typography variant="overline"> Attempt # {index + 1} </Typography>
-      <div className="attemptQuestions">
-        <FormControl className="question">
-          <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
-            # Follicles at Retrieval
-          </FormLabel>
-          <TextField
-            id="standard-number"
-            label="Number"
-            type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            variant="standard"
-            required
-            value={1}
-            onChange={(event) => {}}
-          />
-        </FormControl>
-        <FormControl className="question">
-          <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
-            # Eggs Retrieved
-          </FormLabel>
-          <TextField
-            id="standard-number"
-            label="Number"
-            type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            variant="standard"
-            required
-            value={1}
-            onChange={(event) => {}}
-          />
-        </FormControl>
+  const renderAttempt = (data: IVFAttemptData) => {
+    const index = data.attemptNumber;
+    console.log("xxx render index ", index);
+    return (
+      <Paper className="attemptSection" key={index}>
+        <Typography variant="overline"> Attempt # {index + 1} </Typography>
+        <div className="attemptQuestions">
+          <FormControl className="question">
+            <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
+              # Follicles at Retrieval
+            </FormLabel>
+            <TextField
+              id="standard-number"
+              label="Number"
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="standard"
+              required
+              value={data.folliclesAtRetrieval}
+              onChange={(event) =>
+                handleInputChange(
+                  index,
+                  "folliclesAtRetrieval",
+                  event.target.value
+                )
+              }
+            />
+          </FormControl>
+          <FormControl className="question">
+            <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
+              # Eggs Retrieved
+            </FormLabel>
+            <TextField
+              id="standard-number"
+              label="Number"
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="standard"
+              required
+              value={1}
+              onChange={(event) => {}}
+            />
+          </FormControl>
 
-        <FormControl className="question">
-          <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
-            # Fertilized on Day 1
-          </FormLabel>
-          <TextField
-            id="standard-number"
-            label="Number"
-            type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            variant="standard"
-            required
-            value={1}
-            onChange={(event) => {}}
+          <FormControl className="question">
+            <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
+              # Fertilized on Day 1
+            </FormLabel>
+            <TextField
+              id="standard-number"
+              label="Number"
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="standard"
+              required
+              value={1}
+              onChange={(event) => {}}
+            />
+          </FormControl>
+          <FormControl className="question">
+            <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
+              # Day 3 Embryos Transferred
+            </FormLabel>
+            <TextField
+              id="standard-number"
+              label="Number"
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="standard"
+              required
+              value={1}
+              onChange={(event) => {}}
+            />
+          </FormControl>
+          <FormControl className="question">
+            <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
+              # Blastocysts (Day 5+)
+            </FormLabel>
+            <TextField
+              id="standard-number"
+              label="Number"
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="standard"
+              required
+              value={1}
+              onChange={(event) => {}}
+            />
+          </FormControl>
+          <FormControl className="question">
+            <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
+              # PGT Normal Embryos
+            </FormLabel>
+            <TextField
+              id="standard-number"
+              label="Number"
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="standard"
+              required
+              value={1}
+              onChange={(event) => {}}
+            />
+          </FormControl>
+          <FormControl className="question">
+            <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
+              # Day 5+ Embryos Transferred
+            </FormLabel>
+            <TextField
+              id="standard-number"
+              label="Number"
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="standard"
+              required
+              value={1}
+              onChange={(event) => {}}
+            />
+          </FormControl>
+          <FormControlLabel
+            control={
+              <Checkbox checked={true} onChange={() => {}} name="cancelled" />
+            }
+            label="Was cancelled"
           />
-        </FormControl>
-        <FormControl className="question">
-          <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
-            # Day 3 Embryos Transferred
-          </FormLabel>
-          <TextField
-            id="standard-number"
-            label="Number"
-            type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            variant="standard"
-            required
-            value={1}
-            onChange={(event) => {}}
-          />
-        </FormControl>
-        <FormControl className="question">
-          <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
-            # Blastocysts (Day 5+)
-          </FormLabel>
-          <TextField
-            id="standard-number"
-            label="Number"
-            type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            variant="standard"
-            required
-            value={1}
-            onChange={(event) => {}}
-          />
-        </FormControl>
-        <FormControl className="question">
-          <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
-            # PGT Normal Embryos
-          </FormLabel>
-          <TextField
-            id="standard-number"
-            label="Number"
-            type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            variant="standard"
-            required
-            value={1}
-            onChange={(event) => {}}
-          />
-        </FormControl>
-        <FormControl className="question">
-          <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
-            # Day 5+ Embryos Transferred
-          </FormLabel>
-          <TextField
-            id="standard-number"
-            label="Number"
-            type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            variant="standard"
-            required
-            value={1}
-            onChange={(event) => {}}
-          />
-        </FormControl>
-        <FormControlLabel
-          control={
-            <Checkbox checked={true} onChange={() => {}} name="cancelled" />
-          }
-          label="Was cancelled"
-        />
-      </div>
-    </Paper>
-  );
+        </div>
+      </Paper>
+    );
+  };
 
   return (
     <form onSubmit={() => setStep(3)}>
-      {data.ivfData.map((attempt, index) => renderAttempt(attempt, index))}
+      {Object.values(data.ivfData).map((attempt) => renderAttempt(attempt))}
 
       <div className="nextButton">
         <Button variant="outlined" color="secondary" onClick={() => setStep(1)}>
