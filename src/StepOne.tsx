@@ -130,7 +130,7 @@ export function Step1({
               ivfData[i] = generateNewIVFData(i);
             }
 
-            setData({ ...data, attempts: attemptsNumber, ivfData });
+            setData({ ...data, attempts: attemptsNumber + 1, ivfData });
           }}
         />
       </FormControl>
