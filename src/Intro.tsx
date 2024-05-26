@@ -30,9 +30,11 @@ export function Intro({ setStep }: { setStep: (step: number) => void }) {
         </ListItem>
       </List>
 
-      <Button onClick={() => setStep(1)} variant="contained">
-        Start
-      </Button>
+      <div className="center">
+        <Button onClick={() => setStep(1)} variant="contained" size="large">
+          Start
+        </Button>
+      </div>
     </div>
   );
 }

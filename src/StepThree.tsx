@@ -35,7 +35,7 @@ export function Step3({
         sx={{ marginBottom: "20px" }}
       >
         The 4 questions on this page are OPTIONAL. Feel free to skip to the
-        results if you'd like. Scroll to the bottom.
+        results if you'd like.
       </Typography>
       <FormControl className="question">
         <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
@@ -218,13 +218,19 @@ export function Step3({
         </FormGroup>
       </FormControl>
 
-      <div className="nextButton">
-        <Button variant="outlined" color="secondary" onClick={() => setStep(2)}>
-          Back(2/3)
-        </Button>
-        <Button variant="contained" color="primary" type="submit">
-          Results
-        </Button>
+      <div className="floatingButtons">
+        <div className="nextButton">
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() => setStep(2)}
+          >
+            Back(2/3)
+          </Button>
+          <Button variant="contained" color="primary" type="submit">
+            Results
+          </Button>
+        </div>
       </div>
     </form>
   );

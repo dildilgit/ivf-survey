@@ -7,20 +7,34 @@ html, body{
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 2em;
 }
+
+@media (min-width: 1024px) {
+  .AppContainer {
+    padding: 5em;
+  }
+}
+
 
 .App {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 800px;
   padding-bottom: 2em;
 }
+
 @media (min-width: 1024px) {
   .App {
-    padding: 5em;
+  max-width: 800px;
   }
+}
+
+.center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .divider {
@@ -33,6 +47,8 @@ html, body{
 
 .form{
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .floatingButtons {
@@ -64,25 +80,29 @@ html, body{
   margin-bottom: 0.5em;
 }
 
-.arrowForwardIcon {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.2em;
-}
-@media (min-width: 905px) {
-  .arrowForwardIcon {
-    display: none;
-  }
-}
-
 .attemptSection {
   padding: 10px;
   margin-bottom: 2em;
-  width: 800px;
   border: 1px solid #EDC5AB;
 }
+
+@media (min-width: 450px) {
+  .attemptSection {
+  width: 450px;
+}
+}
+@media (min-width: 1024px) {
+  .attemptSection {
+  width: 800px;
+}
+}
+
 
 .attemptQuestions {
   display: flex;
   flex-direction: column;
+}
+
+.attemptTitle {
+  padding-bottom: 0.5em;
 }

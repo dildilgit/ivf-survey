@@ -117,7 +117,10 @@ export function Step2({
 
     return (
       <Paper className="attemptSection" key={index}>
-        <Typography variant="overline"> Attempt # {index + 1} </Typography>
+        <Typography className="attemptTitle" variant="h5">
+          {" "}
+          Attempt # {index + 1}{" "}
+        </Typography>
         <div className="attemptQuestions">
           <FormControl className="question">
             <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">

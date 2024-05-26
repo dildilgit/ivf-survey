@@ -135,13 +135,19 @@ export function Step1({
         />
       </FormControl>
 
-      <div className="nextButton">
-        <Button variant="outlined" color="secondary" onClick={() => setStep(0)}>
-          Back to Intro
-        </Button>
-        <Button variant="contained" color="primary" type="submit">
-          Next (2/3)
-        </Button>
+      <div className="floatingButtons">
+        <div className="nextButton">
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() => setStep(0)}
+          >
+            Back to Intro
+          </Button>
+          <Button variant="contained" color="primary" type="submit">
+            Next (2/3)
+          </Button>
+        </div>
       </div>
     </form>
   );
