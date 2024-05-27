@@ -81,9 +81,7 @@ html, body{
 }
 
 .attemptSection {
-  padding: 10px;
-  margin-bottom: 2em;
-  border: 1px solid #EDC5AB;
+  margin-bottom: 1em;
 }
 
 @media (min-width: 450px) {
