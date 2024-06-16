@@ -3,9 +3,11 @@ import { useState } from "react";
 import "./App.css";
 import { StepSection } from "./StepSection";
 import Typography from "@mui/material/Typography";
+import { generateNickname } from "./nickname/source";
 
 function App() {
   const [step, setStep] = useState<number>(0);
+  const [nickname, setNickname] = useState<string>(generateNickname());
 
   const subtitles = [
     "Introduction",
@@ -22,12 +24,15 @@ function App() {
             IVF Numbers Game
           </Typography>
           <div className="contentSection">
-            <Typography variant="subtitle1" gutterBottom color="primary">
-              {subtitles[step]}
-            </Typography>
+            <div className="headerRow">
+              <Typography variant="subtitle1" gutterBottom color="primary">
+                {subtitles[step]}
+              </Typography>
+              <Typography>{step > 0 ? `[${nickname}]` : ""}</Typography>
+            </div>
             <Divider className="divider" sx={{ borderBottomWidth: 3 }} />
             <div className="stepSection">
-              <StepSection step={step} setStep={setStep} />
+              <StepSection step={step} setStep={setStep} nickname={nickname} />
             </div>
           </div>
         </div>

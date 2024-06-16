@@ -51,12 +51,13 @@ export function getEmptySurveyData(): SurveyData {
 export function StepSection({
   step,
   setStep,
+  nickname,
 }: {
   step: number;
   setStep: React.Dispatch<React.SetStateAction<number>>;
+  nickname: string;
 }) {
   const [data, setData] = useState<SurveyData>(getEmptySurveyData());
-  const [nickname, setNickname] = useState<string>(generateNickname());
 
   console.log(data);
 
@@ -64,7 +65,14 @@ export function StepSection({
     case 0:
       return <Intro setStep={setStep} nickname={nickname} />;
     case 1:
-      return <Step1 setStep={setStep} data={data} setData={setData} />;
+      return (
+        <Step1
+          setStep={setStep}
+          data={data}
+          setData={setData}
+          nickname={nickname}
+        />
+      );
     case 2:
       return <Step2 setStep={setStep} data={data} setData={setData} />;
     case 3:

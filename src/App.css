@@ -37,6 +37,11 @@ html, body{
   align-items: center;
 }
 
+.headerRow{
+  display: flex;
+  justify-content: space-between;
+}
+
 .divider {
   width: 100%;
 }
