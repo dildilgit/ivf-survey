@@ -85,6 +85,8 @@ export function Step2({
       typeof value === "string"
         ? value === ""
           ? null
+          : Number.isNaN(Number(value))
+          ? value
           : Number(value)
         : Boolean(value);
 
@@ -376,6 +378,10 @@ export function Step2({
                   row
                   aria-labelledby="demo-row-radio-buttons-group-label"
                   name="row-radio-buttons-group"
+                  onChange={(event, value) => {
+                    console.log("xxx", value);
+                    handleInputChange(index, "cycleResultType", value);
+                  }}
                 >
                   <FormControlLabel
                     value="day3Fresh"
