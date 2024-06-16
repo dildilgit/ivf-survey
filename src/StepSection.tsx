@@ -58,8 +58,6 @@ export function StepSection({
 }) {
   const [data, setData] = useState<SurveyData>(getEmptySurveyData());
 
-  console.log(data);
-
   switch (step) {
     case 0:
       return <Intro setStep={setStep} nickname={nickname} />;

@@ -1,6 +1,5 @@
 import {
   TextField,
-  Paper,
   Checkbox,
   Typography,
   Button,
