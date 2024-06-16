@@ -48,7 +48,7 @@ export function Step1({
           required
           value={data.amh}
           onChange={(event) =>
-            setData({ ...data, amh: parseInt(event.target.value) })
+            setData({ ...data, amh: parseFloat(event.target.value) })
           }
           inputProps={{
             step: "0.01", // Allows decimal inputs to two decimal places
@@ -75,7 +75,7 @@ export function Step1({
           variant="standard"
           value={data.fsh}
           onChange={(event) =>
-            setData({ ...data, fsh: parseInt(event.target.value) })
+            setData({ ...data, fsh: parseFloat(event.target.value) })
           }
           inputProps={{
             step: "0.01", // Allows decimal inputs to two decimal places
@@ -129,7 +129,7 @@ export function Step1({
               ivfData[i] = generateNewIVFData(i);
             }
 
-            setData({ ...data, attempts: attemptsNumber + 1, ivfData });
+            setData({ ...data, attempts: attemptsNumber, ivfData });
           }}
         />
       </FormControl>
@@ -143,7 +143,15 @@ export function Step1({
           >
             Back to Intro
           </Button>
-          <Button variant="contained" color="primary" type="submit">
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            // onClick={() => {
+            //   console.log("xxx on next ");
+            //   sendResults();
+            // }}
+          >
             Next (2/3)
           </Button>
         </div>

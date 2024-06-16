@@ -4,9 +4,11 @@ import { getEmptySurveyData, SurveyData } from "./StepSection";
 export function Final({
   setStep,
   setData,
+  nickname,
 }: {
   setStep: (step: number) => void;
   setData: React.Dispatch<React.SetStateAction<SurveyData>>;
+  nickname: string;
 }) {
   return (
     <div>

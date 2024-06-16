@@ -13,11 +13,35 @@ export function Step3({
   setStep,
   data,
   setData,
+  nickname,
 }: {
   setStep: (step: number) => void;
   data: SurveyData;
   setData: React.Dispatch<React.SetStateAction<SurveyData>>;
+  nickname: string;
 }) {
+  // const sendResults = async () => {
+  //   const hook = "https://hooks.zapier.com/hooks/catch/14073772/37mtfsj/";
+
+  //   const dataToSend = {
+  //     nickname,
+  //     timestamp: Date.now(),
+  //     diagnosis: data.diagnosis,
+  //     medications: data.medications,
+  //     procedures: data.procedures,
+  //     supplements: data.supplements,
+  //   };
+
+  //   try {
+  //     const response = await fetch(hook, {
+  //       method: "POST",
+  //       body: JSON.stringify(dataToSend),
+  //     });
+
+  //     return response.json();
+  //   } catch (e) {}
+  // };
+
   const handleChange = (
     field: keyof SurveyData,
     event: React.ChangeEvent<HTMLInputElement>
@@ -58,8 +82,14 @@ export function Step3({
     }));
   };
 
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    // await sendResults();
+    setStep(4);
+  };
+
   return (
-    <form onSubmit={() => setStep(4)}>
+    <form onSubmit={handleSubmit}>
       <Typography
         variant="subtitle1"
         gutterBottom

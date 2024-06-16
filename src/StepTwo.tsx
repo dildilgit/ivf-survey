@@ -22,13 +22,12 @@ export const generateNewIVFData = (index: number): IVFAttemptData => ({
   isCancelled: undefined,
   isDonor: undefined,
   isICSI: undefined,
-  folliclesAtRetrieval: null,
+  folliclesGrown: null,
   eggsRetrieved: null,
   fertilizedOnDay1: null,
   day3Embryos: null,
   blasts: null,
   pgtNormalEmbryos: null,
-  day5PlusEmbryos: null,
   cycleResultType: null,
 });
 
@@ -36,12 +35,39 @@ export function Step2({
   setStep,
   data,
   setData,
+  nickname,
 }: {
   setStep: (step: number) => void;
   data: SurveyData;
   setData: React.Dispatch<React.SetStateAction<SurveyData>>;
+  nickname: string;
 }) {
   const [expanded, setExpanded] = useState<string | false>(false);
+
+  const sendResults = async () => {
+    console.log("Xxx send results");
+    const hook = "https://hooks.zapier.com/hooks/catch/14073772/2oqqyrl/";
+
+    const dataToSend = {
+      nickname,
+      timestamp: Date.now(),
+      age: data.age,
+      amh: data.amh,
+      afc: data.afc,
+      fsh: data.fsh,
+      attempts: data.attempts,
+      ivfData: data.ivfData,
+    };
+
+    try {
+      const response = await fetch(hook, {
+        method: "POST",
+        body: JSON.stringify(dataToSend),
+      });
+
+      return response.json();
+    } catch (e) {}
+  };
 
   let isFormValid = true;
   Object.values(data.ivfData).map((data) => {
@@ -58,17 +84,16 @@ export function Step2({
         ? data.pgtNormalEmbryos <= data.eggsRetrieved ||
           data.pgtNormalEmbryos <= data.blasts
         : true;
-    const isDay5TransferValid =
-      !!data.eggsRetrieved && !!data.blasts && !!data.day5PlusEmbryos
-        ? data.day5PlusEmbryos <= data.eggsRetrieved ||
-          data.day5PlusEmbryos <= data.blasts
+    const isDay5Valid =
+      !!data.eggsRetrieved && !!data.blasts
+        ? data.blasts <= data.eggsRetrieved
         : true;
 
     if (
       !isFertilizationValid ||
       !isday3Valid ||
       !isPgtNormalValid ||
-      !isDay5TransferValid
+      !isDay5Valid
     ) {
       isFormValid = false;
     } else {
@@ -108,7 +133,7 @@ export function Step2({
       !!data.fertilizedOnDay1 &&
       !!data.eggsRetrieved &&
       data.fertilizedOnDay1 > data.eggsRetrieved;
-    const isday3TransferValid =
+    const isday3Valid =
       !!data.day3Embryos &&
       !!data.eggsRetrieved &&
       data.day3Embryos > data.eggsRetrieved;
@@ -118,15 +143,11 @@ export function Step2({
       !!data.blasts &&
       (data.pgtNormalEmbryos > data.eggsRetrieved ||
         data.pgtNormalEmbryos > data.blasts);
-    const isDay5TransferValid =
-      !!data.eggsRetrieved &&
-      !!data.blasts &&
-      !!data.day5PlusEmbryos &&
-      (data.day5PlusEmbryos > data.eggsRetrieved ||
-        data.day5PlusEmbryos > data.blasts);
+    const isDay5Valid =
+      !!data.eggsRetrieved && !!data.blasts && data.blasts > data.eggsRetrieved;
 
     return (
-      <div className="attemptSection">
+      <div className="attemptSection" key={index}>
         <Accordion
           expanded={expanded === `panel${index}`}
           onChange={handleAccordionChange(`panel${index}`)}
@@ -148,7 +169,7 @@ export function Step2({
             <div className="attemptQuestions">
               <FormControl className="question">
                 <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
-                  # Follicles at Retrieval
+                  # Follicles before retrieval or cancellation
                 </FormLabel>
                 <TextField
                   id="standard-number"
@@ -159,11 +180,11 @@ export function Step2({
                   }}
                   variant="standard"
                   required
-                  value={data.folliclesAtRetrieval}
+                  value={data.folliclesGrown}
                   onChange={(event) =>
                     handleInputChange(
                       index,
-                      "folliclesAtRetrieval",
+                      "folliclesGrown",
                       event.target.value
                     )
                   }
@@ -233,9 +254,9 @@ export function Step2({
                   }}
                   variant="standard"
                   value={data.day3Embryos}
-                  error={isday3TransferValid}
+                  error={isday3Valid}
                   helperText={
-                    isday3TransferValid
+                    isday3Valid
                       ? "Number must be less than or equal to the number of eggs"
                       : ""
                   }
@@ -302,34 +323,6 @@ export function Step2({
                   }
                 />
               </FormControl>
-              <FormControl className="question">
-                <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
-                  # Day 5+ Embryos
-                </FormLabel>
-                <TextField
-                  id="standard-number"
-                  label="Number"
-                  type="number"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="standard"
-                  value={data.day5PlusEmbryos}
-                  error={isDay5TransferValid}
-                  helperText={
-                    isDay5TransferValid
-                      ? "Number of day 5 embryos cannot be more than the number of eggs or blasts"
-                      : ""
-                  }
-                  onChange={(event) =>
-                    handleInputChange(
-                      index,
-                      "day5PlusEmbryos",
-                      event.target.value
-                    )
-                  }
-                />
-              </FormControl>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -384,19 +377,14 @@ export function Step2({
                   }}
                 >
                   <FormControlLabel
-                    value="day3Fresh"
+                    value="fresh"
                     control={<Radio />}
-                    label="Day 3 Fresh Transfer"
+                    label="Fresh Transfer"
                   />
                   <FormControlLabel
-                    value="day5+Fresh"
+                    value="frozen"
                     control={<Radio />}
-                    label="Day 5+ Fresh Transfer"
-                  />
-                  <FormControlLabel
-                    value="allFreeze"
-                    control={<Radio />}
-                    label="All embryos frozen"
+                    label="Embryos frozen"
                   />
                 </RadioGroup>
               </FormControl>
@@ -412,8 +400,18 @@ export function Step2({
       setExpanded(isExpanded ? panel : false);
     };
 
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (isFormValid) {
+      await sendResults();
+      setStep(3);
+    } else {
+      alert("Please correct the errors in the form before proceeding.");
+    }
+  };
+
   return (
-    <form className="form" onSubmit={() => setStep(3)}>
+    <form className="form" onSubmit={handleSubmit}>
       {Object.values(data.ivfData).map((attempt) => renderAttempt(attempt))}
 
       <div className="floatingButtons">

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Final } from "./Final";
 import { Intro } from "./Intro";
-import { generateNickname } from "./nickname/source";
 import { Step1 } from "./StepOne";
 import { Step3 } from "./StepThree";
 import { Step2 } from "./StepTwo";
@@ -21,14 +20,13 @@ export type SurveyData = {
 
 export type IVFAttemptData = {
   attemptNumber: number;
-  cycleResultType: "day3Fresh" | "day5+Fresh" | "allFreeze" | null;
-  folliclesAtRetrieval: number | null;
+  cycleResultType: "fresh" | "frozen" | null;
+  folliclesGrown: number | null;
   eggsRetrieved: number | null;
   fertilizedOnDay1: number | null;
   day3Embryos: number | null;
   blasts: number | null;
   pgtNormalEmbryos: number | null;
-  day5PlusEmbryos: number | null;
   isCancelled: boolean | undefined;
   isDonor: boolean | undefined;
   isICSI: boolean | undefined;
@@ -66,19 +64,26 @@ export function StepSection({
     case 0:
       return <Intro setStep={setStep} nickname={nickname} />;
     case 1:
+      return <Step1 setStep={setStep} data={data} setData={setData} />;
+    case 2:
       return (
-        <Step1
+        <Step2
           setStep={setStep}
           data={data}
           setData={setData}
           nickname={nickname}
         />
       );
-    case 2:
-      return <Step2 setStep={setStep} data={data} setData={setData} />;
     case 3:
-      return <Step3 setStep={setStep} data={data} setData={setData} />;
+      return (
+        <Step3
+          setStep={setStep}
+          data={data}
+          setData={setData}
+          nickname={nickname}
+        />
+      );
     default:
-      return <Final setStep={setStep} setData={setData} />;
+      return <Final setStep={setStep} setData={setData} nickname={nickname} />;
   }
 }
