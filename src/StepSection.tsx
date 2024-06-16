@@ -21,13 +21,14 @@ export type SurveyData = {
 
 export type IVFAttemptData = {
   attemptNumber: number;
+  cycleResultType: "day3Fresh" | "day5+Fresh" | "allFreeze" | null;
   folliclesAtRetrieval: number | null;
   eggsRetrieved: number | null;
   fertilizedOnDay1: number | null;
-  day3EmbryosTransferred: number | null;
+  day3Embryos: number | null;
   blasts: number | null;
   pgtNormalEmbryos: number | null;
-  day5PlusEmbryosTransferred: number | null;
+  day5PlusEmbryos: number | null;
   isCancelled: boolean | undefined;
   isDonor: boolean | undefined;
   isICSI: boolean | undefined;

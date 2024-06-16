@@ -7,6 +7,8 @@ import {
   FormLabel,
   FormControlLabel,
   AccordionSummary,
+  RadioGroup,
+  Radio,
 } from "@mui/material";
 import { FormControl } from "@mui/base/FormControl";
 import { IVFAttemptData, SurveyData } from "./StepSection";
@@ -23,10 +25,11 @@ export const generateNewIVFData = (index: number): IVFAttemptData => ({
   folliclesAtRetrieval: null,
   eggsRetrieved: null,
   fertilizedOnDay1: null,
-  day3EmbryosTransferred: null,
+  day3Embryos: null,
   blasts: null,
   pgtNormalEmbryos: null,
-  day5PlusEmbryosTransferred: null,
+  day5PlusEmbryos: null,
+  cycleResultType: null,
 });
 
 export function Step2({
@@ -44,26 +47,26 @@ export function Step2({
   Object.values(data.ivfData).map((data) => {
     const isFertilizationValid =
       !!data.fertilizedOnDay1 && !!data.eggsRetrieved
-        ? data.fertilizedOnDay1 > data.eggsRetrieved
+        ? data.fertilizedOnDay1 <= data.eggsRetrieved
         : true;
-    const isday3TransferValid =
-      !!data.day3EmbryosTransferred && !!data.eggsRetrieved
-        ? data.day3EmbryosTransferred > data.eggsRetrieved
+    const isday3Valid =
+      !!data.day3Embryos && !!data.eggsRetrieved
+        ? data.day3Embryos <= data.eggsRetrieved
         : true;
     const isPgtNormalValid =
       !!data.pgtNormalEmbryos && !!data.eggsRetrieved && !!data.blasts
-        ? data.pgtNormalEmbryos > data.eggsRetrieved ||
-          data.pgtNormalEmbryos > data.blasts
+        ? data.pgtNormalEmbryos <= data.eggsRetrieved ||
+          data.pgtNormalEmbryos <= data.blasts
         : true;
     const isDay5TransferValid =
-      !!data.eggsRetrieved && !!data.blasts && !!data.day5PlusEmbryosTransferred
-        ? data.day5PlusEmbryosTransferred > data.eggsRetrieved ||
-          data.day5PlusEmbryosTransferred > data.blasts
+      !!data.eggsRetrieved && !!data.blasts && !!data.day5PlusEmbryos
+        ? data.day5PlusEmbryos <= data.eggsRetrieved ||
+          data.day5PlusEmbryos <= data.blasts
         : true;
 
     if (
       !isFertilizationValid ||
-      !isday3TransferValid ||
+      !isday3Valid ||
       !isPgtNormalValid ||
       !isDay5TransferValid
     ) {
@@ -104,9 +107,9 @@ export function Step2({
       !!data.eggsRetrieved &&
       data.fertilizedOnDay1 > data.eggsRetrieved;
     const isday3TransferValid =
-      !!data.day3EmbryosTransferred &&
+      !!data.day3Embryos &&
       !!data.eggsRetrieved &&
-      data.day3EmbryosTransferred > data.eggsRetrieved;
+      data.day3Embryos > data.eggsRetrieved;
     const isPgtNormalValid =
       !!data.pgtNormalEmbryos &&
       !!data.eggsRetrieved &&
@@ -116,9 +119,9 @@ export function Step2({
     const isDay5TransferValid =
       !!data.eggsRetrieved &&
       !!data.blasts &&
-      !!data.day5PlusEmbryosTransferred &&
-      (data.day5PlusEmbryosTransferred > data.eggsRetrieved ||
-        data.day5PlusEmbryosTransferred > data.blasts);
+      !!data.day5PlusEmbryos &&
+      (data.day5PlusEmbryos > data.eggsRetrieved ||
+        data.day5PlusEmbryos > data.blasts);
 
     return (
       <div className="attemptSection">
@@ -217,7 +220,7 @@ export function Step2({
               </FormControl>
               <FormControl className="question">
                 <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
-                  # Day 3 Embryos Transferred
+                  # Day 3 Embryos
                 </FormLabel>
                 <TextField
                   id="standard-number"
@@ -227,19 +230,15 @@ export function Step2({
                     shrink: true,
                   }}
                   variant="standard"
-                  value={data.day3EmbryosTransferred}
+                  value={data.day3Embryos}
                   error={isday3TransferValid}
                   helperText={
                     isday3TransferValid
-                      ? "Number transferred must be less than or equal to the number of eggs"
+                      ? "Number must be less than or equal to the number of eggs"
                       : ""
                   }
                   onChange={(event) =>
-                    handleInputChange(
-                      index,
-                      "day3EmbryosTransferred",
-                      event.target.value
-                    )
+                    handleInputChange(index, "day3Embryos", event.target.value)
                   }
                 />
               </FormControl>
@@ -303,7 +302,7 @@ export function Step2({
               </FormControl>
               <FormControl className="question">
                 <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
-                  # Day 5+ Embryos Transferred
+                  # Day 5+ Embryos
                 </FormLabel>
                 <TextField
                   id="standard-number"
@@ -313,7 +312,7 @@ export function Step2({
                     shrink: true,
                   }}
                   variant="standard"
-                  value={data.day5PlusEmbryosTransferred}
+                  value={data.day5PlusEmbryos}
                   error={isDay5TransferValid}
                   helperText={
                     isDay5TransferValid
@@ -323,7 +322,7 @@ export function Step2({
                   onChange={(event) =>
                     handleInputChange(
                       index,
-                      "day5PlusEmbryosTransferred",
+                      "day5PlusEmbryos",
                       event.target.value
                     )
                   }
@@ -369,6 +368,32 @@ export function Step2({
                 }
                 label="ICSI fertilization?"
               />
+              <FormControl className="radioSection">
+                <FormLabel id="demo-row-radio-buttons-group-label">
+                  What was the result of the embryos (if any)?
+                </FormLabel>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
+                  name="row-radio-buttons-group"
+                >
+                  <FormControlLabel
+                    value="day3Fresh"
+                    control={<Radio />}
+                    label="Day 3 Fresh Transfer"
+                  />
+                  <FormControlLabel
+                    value="day5+Fresh"
+                    control={<Radio />}
+                    label="Day 5+ Fresh Transfer"
+                  />
+                  <FormControlLabel
+                    value="allFreeze"
+                    control={<Radio />}
+                    label="All embryos frozen"
+                  />
+                </RadioGroup>
+              </FormControl>
             </div>
           </AccordionDetails>
         </Accordion>
