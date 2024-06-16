@@ -63,7 +63,7 @@ export function Step1({
       </FormControl>
       <FormControl className="question">
         <FormLabel sx={{ fontSize: "1.1em" }} className="questionLabel">
-          What is your highest recorded FSH (miU/mL)
+          What is your highest recorded FSH (mIU/mL)
         </FormLabel>
         <TextField
           id="standard-number"
@@ -73,7 +73,6 @@ export function Step1({
             shrink: true,
           }}
           variant="standard"
-          required
           value={data.fsh}
           onChange={(event) =>
             setData({ ...data, fsh: parseInt(event.target.value) })
